@@ -1,14 +1,50 @@
 @mixin modernizr($feature, $support: true) {
+  //  Placeholder. Moderrnizr query
   $modernizr-selector: "" !default;
 
-  @if $support == true {
-    $modernizr-selector: ".#{$feature} &";
-  } @else {
-    $modernizr-selector: ".no-js &, .no-#{$feature} &";
+  //  Placeholder. Current directory
+  $current-selector: "" !default;
+
+  //  Validation. is '$support' true/false
+  $validSupport: type-of($support == boolean);
+
+  //  Placeholder. Do we have feature list
+  $is-list: null;
+
+  //  Placeholder. It will help me if I have 'false' value for '$support'
+  $prefix: null;
+
+  //  Sets value if we have a feature list
+  @if length($feature) > 1 {
+    $is-list: true;
   }
 
+  //  Sets value if '$support' is false
+  @if $support == false {
+    $prefix: "no-";
+  }
+
+  //  Creates modernizr query
+  @if $is-list {
+    @each $i in $feature {
+      $modernizr-selector: "#{$modernizr-selector}.#{$prefix}#{$i}";
+    }
+  } @else {
+    $modernizr-selector: ".#{$prefix}#{$feature}";
+  }
+
+  //  Creates final query with current directory
+  @if $validSupport {
+    @if $support == true {
+      $current-selector: "#{$modernizr-selector} &";
+    } @else {
+      $current-selector: ".no-js &, #{$modernizr-selector} &";
+    }
+  }
+
+  //  Applies to mixin
   @at-root {
-    #{$modernizr-selector} {
+    #{$current-selector} {
       @content;
     }
   }
