@@ -6,7 +6,7 @@ Modernizr gives you many plus to check your browser status against new features.
 
 ## Example Usage
 
-<code>
+```
 .wrapper {
   @include modernizr(flexbox) {
     display: flex;
@@ -35,11 +35,11 @@ Modernizr gives you many plus to check your browser status against new features.
 .no-flexbox .wrapper .column {
   float: left;
 }
-</code>
+```
 
 It is possible also having more feature in the query
 
-<code>
+```
 .wrapper {
   @include(flexbox flexwrap) {
     display: flex;
@@ -52,4 +52,4 @@ It is possible also having more feature in the query
   display: flex;
   flex-wrap: wrap;
 }
-</code>
+```
