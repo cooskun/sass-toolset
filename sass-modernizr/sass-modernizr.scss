@@ -1,0 +1,15 @@
+@mixin modernizr($feature, $support: true) {
+  $modernizr-selector: "" !default;
+
+  @if $support == true {
+    $modernizr-selector: ".#{$feature} &";
+  } @else {
+    $modernizr-selector: ".no-js &, .no-#{$feature} &";
+  }
+
+  @at-root {
+    #{$modernizr-selector} {
+      @content;
+    }
+  }
+}
