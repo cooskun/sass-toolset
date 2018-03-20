@@ -200,3 +200,11 @@
     _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
   }
 }
+
+._webkit-better-antialiasing {
+  -webkit-transform: rotate(360deg);
+}
+
+._firefox-gray-border-problem {
+  border-style: inset;
+}
