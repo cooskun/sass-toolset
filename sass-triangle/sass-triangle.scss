@@ -1,0 +1,202 @@
+@mixin triangle($dir, $size, $color, $ie6: false) {
+  //  Base properties for the triangle
+  width: 0;
+  height: 0;
+  border-style: solid;
+
+  //  Sizes list
+  $length: length($size);
+
+  //  Default unit for unitless values
+  $default-unit: "px";
+
+  //  All size values will be here with default unit
+  $sizes-unit: ();
+
+  //  All size values will be here as unitless
+  $sizes-unitless: ();
+
+  //  Check the sizes that it might be unitless
+  //  Make two list from sizes : $size-unit, $size-unitless
+  //  All value will attach to both list with unit and without unit
+  @each $i in $size {
+    //  Value is unitless
+    @if unitless($i) {
+      $sizes-unit: append($sizes-unit, $i * 1#{$default-unit});
+      $sizes-unitless: append($sizes-unitless, $i);
+    }
+
+    //  Value has unit
+    @else {
+      $sizes-unit: append($sizes-unit, $i);
+      $sizes-unitless: append($sizes-unit, unitless($i));
+    }
+  }
+
+  //  If $dir comes without quotes fix it
+  @if unquote($dir) {
+    $dir: #{$dir};
+  }
+
+  //  There is one value for the size
+  @if $length == 1 {
+    $width: $sizes-unit !global;
+    $height: $sizes-unit !global;
+
+    $half-width: nth($sizes-unitless, 1) / 2#{$default-unit} !global;
+    $half-height: nth($sizes-unitless, 1) / 2#{$default-unit} !global;
+  }
+
+  //  There is two values for the size
+  @if $length == 2 {
+    $width: nth($sizes-unit, 1) !global;
+    $height: nth($sizes-unit, 2) !global;
+
+    $half-width: nth($sizes-unitless, 1) / 2#{$default-unit} !global;
+    $half-height: nth($sizes-unitless, 2) / 2#{$default-unit} !global;
+  }
+
+  //  There is three values for the size
+  @if $length == 3 {
+    //  Triangle direction is vertical
+    @if $dir == "custom top" or $dir == "custom bottom" {
+      $height: nth($sizes-unit, 1) !global;
+      $left: nth($sizes-unit, 2) !global;
+      $right: nth($sizes-unit, 3) !global;
+    }
+
+    //  Triangle direction is horizontal
+    @else if $dir == "custom left" or $dir == "custom right" {
+      $width: nth($sizes-unit, 1) !global;
+      $top: nth($sizes-unit, 2) !global;
+      $bottom: nth($sizes-unit, 3) !global;
+    }
+  }
+
+  //  Create triangle
+
+  //  Triangle is looking top
+  @if $dir == "top" {
+    border-width: 0 $half-width $height $half-width;
+    border-color: transparent transparent $color transparent;
+
+    @if $ie6 {
+      _border-color: #000000 #000000 $color #000000;
+    }
+  }
+
+  //  Triangle is looking bottom
+  @else if $dir == "bottom" {
+    border-width: $height $half-width 0 $half-width;
+    border-color: $color transparent transparent transparent;
+
+    @if $ie6 {
+      _border-color: $color #000000 #000000 #000000;
+    }
+  }
+
+  //  Triangle is looking left
+  @else if $dir == "left" {
+    border-width: $half-height $half-width $half-height 0;
+    border-color: transparent $color transparent transparent;
+
+    @if $ie6 {
+      _border-color: #000000 $color #000000 #000000;
+    }
+  }
+
+  //  Triangle is looking right
+  @else if $dir == "right" {
+    border-width: $half-height 0 $half-height $width;
+    border-color: transparent transparent transparent $color;
+
+    @if $ie6 {
+      _border-color: #000000 #000000 #000000 $color;
+    }
+  }
+
+  //  Triangle is looking top-left
+  @else if $dir == "top left" or $dir == "left top" {
+    border-width: $height $width 0 0;
+    border-color: $color transparent transparent transparent;
+
+    @if $ie6 {
+      _border-color: $color #000000 #000000 #000000;
+    }
+  }
+
+  //  Triangle is looking top-right
+  @else if $dir == "top right" or $dir == "right top" {
+    border-width: 0 $width $height 0;
+    border-color: transparent $color transparent transparent;
+
+    @if $ie6 {
+      _border-color: #000000 $color #000000 #000000;
+    }
+  }
+
+  //  Triangle is looking bottom-left
+  @else if $dir == "bottom left" or $dir == "left bottom" {
+    border-width: $height 0 0 $width;
+    border-color: transparent transparent transparent $color;
+
+    @if $ie6 {
+      _border-color: #000000 #000000 #000000 $color;
+    }
+  }
+
+  //  Triangle is looking bottom-right
+  @else if $dir == "bottom right" or $dir == "right bottom" {
+    border-width: 0 0 $height $width;
+    border-color: transparent transparent $color transparent;
+
+    @if $ie6 {
+      _border-color: #000000 #000000 $color #000000;
+    }
+  }
+
+  //  Custom triangle. Direction is top
+  @else if $dir == "custom top" {
+    border-width: 0 $right $height $left;
+    border-color: transparent transparent $color transparent;
+
+    @if $ie6 {
+      _border-color: #000000 #000000 $color #000000;
+    }
+  }
+
+  //  Custom triangle. Direction is bottom
+  @else if $dir == "custom bottom" {
+    border-width: $height $right 0 $left;
+    border-color: $color transparent transparent transparent;
+
+    @if $ie6 {
+      _border-color: $color #000000 #000000 #000000;
+    }
+  }
+
+  //  Custom triangle. Direction is left
+  @else if $dir == "custom left" {
+    border-width: $top $width $bottom 0;
+    border-color: transparent $color transparent transparent;
+
+    @if $ie6 {
+      _border-color: #000000 $color #000000 #000000;
+    }
+  }
+
+  //  Custom triangle. Direction is right
+  @else if $dir == "custom right" {
+    border-width: $top 0 $bottom $width;
+    border-color: transparent transparent transparent $color;
+
+    @if $ie6 {
+      _border-color: #000000 #000000 #000000 $color;
+    }
+  }
+
+  //  Polyfill for Internet Explorer 6 (optional)
+  @if $ie6 {
+    _filter: progid:DXImageTransform.Microsoft.Chroma(color='#000000');
+  }
+}
