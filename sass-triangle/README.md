@@ -20,29 +20,29 @@ Then use the mixin
 // @include triangle(direction, width height, color);
 
 // Free usage: custom triangle
-// @include triangle(direction, width/height left/top right/bottom, color);
+// @include triangle(direction, width/height left/up right/down, color);
 ```
 
-If direction is "custom top" or "custom bottom", sizes paramteres will be sort by "height left right", if it is "custom left" or "custom right" then alignment will be "width top bottom"
+If direction is "custom up" or "custom down", sizes paramteres will be sort by "height left right", if it is "custom left" or "custom right" then alignment will be "width up down"
 
 There is more. You can have internet explorer 6 support (optional)
 
 ```
-@include triangle(top, 50px, red, ie6);
+@include triangle(up, 50px, red, ie6);
 
 // or
 
-@include triangle(top, 50px, red, true);
+@include triangle(up, 50px, red, true);
 ```
 
 ### Parameter Options
 
-| Parameter | Value Types                                                                                                                                            |
-| --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Direction | "top", "bottom", "left", "right", "top left", "top right", "bottom left", "bottom right", "custom top", "custom bottom", "custom left", "custom right" |
-| Size      | Number with or without units (50, 50px, 50em, 50rem)                                                                                                   |
-| Color     | All color types (rgb, rgba, hex, hsl, hsla, color names)                                                                                               |
-| IE 6      | boolean or "ie6"                                                                                                                                       |
+| Parameter | Value Types                                                                                                                                |
+| --------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| Direction | "up", "down", "left", "right", "up left", "up right", "down left", "down right", "custom up", "custom down", "custom left", "custom right" |
+| Size      | Number with or without units (50, 50px, 50em, 50rem)                                                                                       |
+| Color     | All color types (rgb, rgba, hex, hsl, hsla, color names)                                                                                   |
+| IE 6      | boolean or "ie6"                                                                                                                           |
 
 ## Bonus Utilities
 
