@@ -1,0 +1,56 @@
+//  Responsive device sizes and prefixes. Fits to Bootstrap 4
+$Devices: (
+  xs: 320px,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px
+) !default;
+
+@mixin generate($prefix, $property, $values, $extra) {    
+  // Placeholders for extra properties
+  $is-important: "";
+  $is-responsive: "";
+
+  // Check the property if there is extra property
+  @if length($extra) > 0 {
+    @each $i in $extra {
+      //  Important is activated
+      @if $i == "important" {
+        $is-important: " " + !important;
+      } 
+      // Responsive is activated
+      @else if $i == "responsive" {
+        $is-responsive: true;
+      }
+    }
+  }
+
+  // Loop utility values
+  @each $val in $values {
+    // .property-value { property: value is-important; }
+    .#{$prefix}-#{$val} {
+      #{$property}: #{$val}#{$is-important};
+    }
+
+    // If responsive is activated
+    @if $is-responsive == true {
+      // Loop the Devices obejct and get the device sizes with prefixes
+      @each $i in $Devices {
+        // Device Prefix
+        $device: nth($i, 1);
+
+        // Device Size
+        $size: nth($i, 2);
+
+        // Open the media query scope
+        @media all and (min-width: $size) {
+          // .device-prefix-value { property: value is-important; }
+          .#{$device}-#{$prefix}-#{$val} {
+            #{$property}: #{$val}#{$is-important};
+          }            
+        }
+      }
+    } 
+  }   
+}
