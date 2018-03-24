@@ -1,0 +1,105 @@
+@import "variables";
+
+@mixin counter($prefix, $property, $values, $extra: null) {
+  // Placeholders for extra properties
+  $is-important: "" !default;
+  $is-responsive: false !default;
+  $is-count: false !default;
+  $unit: "px" !default;
+  $filter: 1 !default;
+
+  // Check the property if there is extra properties
+  @if length($extra) > 0 {
+    @each $val in $extra {
+      //  Important is activated
+      @if $val == "important" {
+        $is-important: " " + !important;
+      }
+
+      // Responsive is activated
+      @else if $val == "responsive" {
+        $is-responsive: true;
+      }
+
+      // Get the increment
+      @else if type-of($val) == number {
+        $filter: $val;
+      }
+
+      // Get the unit
+      @else if $val == "px" or $val == "em" or $val == "rem" or $val == "%" {
+        $unit: $val;
+      }
+
+      // Unvalid value
+      @else {
+        @warn "#{$val} isn't an existing value. Please check it and try again";
+      }
+    }
+  }
+
+  // Activate the counter if values contains "to"
+  @each $i in $values {
+    @if $i == "to" {
+      $is-count: true;
+    }
+  }
+
+  // Counter is active. Make a list of values
+  @if $is-count {
+    // Counter always have to take seperator to center
+    // The seperator is "to"
+    // Index of "to" is our guide to catching first and last value
+    $index-of-to: index($values, "to");
+    $index-of-begin: $absolute-place-of-to - 1;
+    $index-of-ending: $absolute-place-of-to + 1;
+
+    // Gets the values to making all of list
+    $first-number: nth($values, $index-of-begin);
+    $last-number: nth($values, $index-of-ending);
+
+    // Empties the list
+    $values: ();
+
+    // Fills list with counter
+    @for $i from $first-number through $last-number {
+      @if $i%$filter == 0 {
+        $values: append($values, $i);
+      }
+    }
+  }
+
+  // Loop utility values
+  @each $val in $values {
+    $selector: ".#{$prefix}-#{$val}";
+
+    // .property-value { property: value is-important; }
+    #{$selector} {
+      @each $prop in $property {
+        #{$prop}: #{$val}#{$unit}#{$is-important};
+      }
+    }
+
+    // If responsive is activated
+    @if $is-responsive {
+      // Loop the Devices obejct and get the device sizes with prefixes
+      @each $i in $Devices {
+        // Device Prefix
+        $device: nth($i, 1);
+
+        // Device Size
+        $size: nth($i, 2);
+
+        // Open the media query scope
+        @media all and (min-width: $size) {
+          // .device-prefix-value { property: value is-important; }
+          .#{$device}-#{$prefix}-#{$val} {
+            @each $prop in $property {
+              #{$prop}: #{$val}#{$unit}#{$is-important};
+            }
+          }
+        }
+      }
+    }
+  }
+}

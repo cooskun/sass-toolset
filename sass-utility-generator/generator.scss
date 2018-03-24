@@ -1,27 +1,26 @@
-//  Responsive device sizes and prefixes. Fits to Bootstrap 4
-$Devices: (
-  xs: 320px,
-  sm: 576px,
-  md: 768px,
-  lg: 992px,
-  xl: 1200px
-) !default;
+@import "variables";
 
-@mixin generate($prefix, $property, $values, $extra) {    
+@mixin generator($prefix, $property, $values, $extra: null) {
   // Placeholders for extra properties
-  $is-important: "";
-  $is-responsive: "";
+  $is-important: "" !default;
+  $is-responsive: false !default;
 
-  // Check the property if there is extra property
+  // Check the property if there is extra properties
   @if length($extra) > 0 {
-    @each $i in $extra {
+    @each $val in $extra {
       //  Important is activated
-      @if $i == "important" {
+      @if $val == "important" {
         $is-important: " " + !important;
-      } 
+      }
+
       // Responsive is activated
-      @else if $i == "responsive" {
+      @else if $val == "responsive" {
         $is-responsive: true;
+      }
+
+      // Unvalid value
+      @else {
+        @warn "#{$val} isn't an existing value. Please check it and try again";
       }
     }
   }
@@ -48,9 +47,11 @@ $Devices: (
           // .device-prefix-value { property: value is-important; }
           .#{$device}-#{$prefix}-#{$val} {
             #{$property}: #{$val}#{$is-important};
-          }            
+          }
         }
       }
-    } 
-  }   
+    }
+  }
 }
+
+@include generator(ta, text-align, center, responsive);
