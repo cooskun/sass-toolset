@@ -1,0 +1,223 @@
+// Query
+// **************************************
+@mixin query($args...) {
+  $query: $default-device;
+
+  @each $i in $args {
+    $type: type_of($i);
+
+    @if $type == "string" {
+      $valid: map_has_key($Queries, $i);
+
+      @if $valid {
+        $query: $query + " and " + map_get($Queries, $i);
+      }
+    }
+
+    @if $type == "map" {
+      $feature: map_keys($i);
+      $value: map_values($i);
+
+      $validFeature: validate(feature, #{$feature});
+
+      @if $validFeature {
+        $query: $query + " and " + "(#{$feature} : #{$value})";
+      }
+    }
+
+    @if $type == "number" {
+      $i: unitlessToPx($i);
+
+      @if str_index($query, min-width) and str_index($query, max-width) {
+        @warn "You can add maximum two number value";
+      } @else {
+        @if str_index($query, min-width) {
+          $query: $query + " and " + "(max-width : #{$i})";
+        } @else {
+          $query: $query + " and " + "(min-width : #{$i})";
+        }
+      }
+    }
+  }
+
+  @media #{$query} {
+    @content;
+  }
+}
+
+// Size Queries
+// **************************************
+@mixin min($value) {
+  $valid: type_of($value) == "number";
+
+  @if $valid {
+    @include qPlus($value) {
+      @content;
+    }
+  }
+}
+
+@mixin max($value) {
+  $valid: type_of($value) == "number";
+  $value: unitlessToPx($value);
+
+  @if $valid {
+    @include qPlus((max-width: $value)) {
+      @content;
+    }
+  }
+}
+
+@mixin minMax($min, $max) {
+  $valid: type_of($min) == "number" and type_of($max) == "number" and $max >
+    $min;
+
+  @if $valid {
+    $min: unitlessToPx($min);
+    $max: unitlessToPx($max);
+
+    @include qPlus($min, $max) {
+      @content;
+    }
+  }
+}
+
+@mixin width($value) {
+  $valid: type_of($value) == "number";
+
+  @if $valid {
+    $value: unitlessToPx($value);
+
+    @include qPlus((width: $value)) {
+      @content;
+    }
+  }
+}
+
+@mixin height($value) {
+  $valid: type_of($value) == "number";
+
+  @if $valid {
+    $value: unitlessToPx($value);
+
+    @include qPlus((height: $value)) {
+      @content;
+    }
+  }
+}
+
+// Breakpoint Mixins
+// **************************************
+
+// Min-Width
+@mixin xs() {
+  @include min($xs-min) {
+    @content;
+  }
+}
+
+@mixin sm() {
+  @include min($sm-min) {
+    @content;
+  }
+}
+
+@mixin md() {
+  @include min($md-min) {
+    @content;
+  }
+}
+
+@mixin lg() {
+  @include min($lg-min) {
+    @content;
+  }
+}
+
+@mixin xl() {
+  @include min($xl-min) {
+    @content;
+  }
+}
+
+// Max-width
+@mixin xs-max() {
+  @include max($xs-max) {
+    @content;
+  }
+}
+
+@mixin sm-max() {
+  @include max($sm-max) {
+    @content;
+  }
+}
+
+@mixin md-max() {
+  @include max($md-max) {
+    @content;
+  }
+}
+
+@mixin lg-max() {
+  @include max($lg-max) {
+    @content;
+  }
+}
+
+// Min-Width and Max-Width
+@mixin xs-only() {
+  @include minMax($xs-min, $xs-max) {
+    @content;
+  }
+}
+
+@mixin sm-only() {
+  @include minMax($sm-min, $sm-max) {
+    @content;
+  }
+}
+
+@mixin md-only() {
+  @include minMax($md-min, $md-max) {
+    @content;
+  }
+}
+
+@mixin lg-only() {
+  @include minMax($lg-min, $lg-max) {
+    @content;
+  }
+}
+
+// Orientations
+// **************************************
+@mixin orientation($value) {
+  $valid: validate(orientation, $value);
+
+  @if $valid {
+    @include qPlus((orientation: $value)) {
+      @content;
+    }
+  }
+}
+
+@mixin portrait() {
+  @include orientation(portrait) {
+    @content;
+  }
+}
+
+@mixin landscape() {
+  @include orientation(landscape) {
+    @content;
+  }
+}
+
+// Retina
+// **************************************
+@mixin retina() {
+  @include qPlus(retina) {
+    @content;
+  }
+}

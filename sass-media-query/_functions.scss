@@ -1,0 +1,26 @@
+//  Unitless Value To Pixel
+// **************************************
+@function unitlessToPx($value) {
+  @if type_of($value) == "number" and unitless($value) {
+    $value: $value * 1px;
+  }
+  @return $value;
+}
+
+//  Validate something from $Validations object
+// **************************************
+@function validate($target, $value) {
+  $isTrue: null;
+
+  @if map_has_key($Validations, $target) {
+    $target: map_get($Validations, #{$target});
+  }
+
+  @each $i in $target {
+    @if ($i == $value) {
+      $isTrue: true;
+    }
+  }
+
+  @return $isTrue;
+}
