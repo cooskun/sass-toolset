@@ -1,0 +1,19 @@
+{
+  "name": "sass-toolset",
+  "version": "1.0.1",
+  "description": "An useful toolset for Sass",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coskunbaris/sass-toolset.git"
+  },
+  "author": "Coskun Baris <coskun.bris@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/coskunbaris/sass-toolset/issues"
+  },
+  "homepage": "https://github.com/coskunbaris/sass-toolset#readme"
+}
