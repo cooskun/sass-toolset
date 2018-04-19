@@ -1,3 +1,7 @@
+// Dependencies
+@import "_config.scss";
+@import "_functions.scss";
+
 // Query
 // **************************************
 @mixin query($args...) {
