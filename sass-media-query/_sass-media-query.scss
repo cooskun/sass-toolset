@@ -1,44 +1,45 @@
 // Dependencies
-@import "_config.scss";
-@import "_functions.scss";
+@import '_config.scss';
+@import '_functions.scss';
 
+// **************************************
 // Query
 // **************************************
-@mixin query($args...) {
+@mixin media($args...) {
   $query: $default-device;
 
   @each $i in $args {
     $type: type_of($i);
 
-    @if $type == "string" {
+    @if $type == 'string' {
       $valid: map_has_key($Queries, $i);
 
       @if $valid {
-        $query: $query + " and " + map_get($Queries, $i);
+        $query: $query + ' and ' + map_get($Queries, $i);
       }
     }
 
-    @if $type == "map" {
+    @if $type == 'map' {
       $feature: map_keys($i);
       $value: map_values($i);
 
       $validFeature: validate(feature, #{$feature});
 
       @if $validFeature {
-        $query: $query + " and " + "(#{$feature} : #{$value})";
+        $query: $query + ' and ' + '(#{$feature} : #{$value})';
       }
     }
 
-    @if $type == "number" {
-      $i: unitlessToPx($i);
+    @if $type == 'number' {
+      $i: fix-unitless($i);
 
       @if str_index($query, min-width) and str_index($query, max-width) {
         @warn "You can add maximum two number value";
       } @else {
         @if str_index($query, min-width) {
-          $query: $query + " and " + "(max-width : #{$i})";
+          $query: $query + ' and ' + '(max-width : #{$i})';
         } @else {
-          $query: $query + " and " + "(min-width : #{$i})";
+          $query: $query + ' and ' + '(min-width : #{$i})';
         }
       }
     }
@@ -52,59 +53,71 @@
 // Size Queries
 // **************************************
 @mixin min($value) {
-  $valid: type_of($value) == "number";
+  $valid: type_of($value) == 'number';
 
   @if $valid {
-    @include qPlus($value) {
+    @include media($value) {
       @content;
     }
   }
 }
 
 @mixin max($value) {
-  $valid: type_of($value) == "number";
-  $value: unitlessToPx($value);
+  $valid: type_of($value) == 'number';
+  $value: fix-unitless($value);
 
   @if $valid {
-    @include qPlus((max-width: $value)) {
+    @include media(
+      (
+        max-width: $value
+      )
+    ) {
       @content;
     }
   }
 }
 
 @mixin minMax($min, $max) {
-  $valid: type_of($min) == "number" and type_of($max) == "number" and $max >
+  $valid: type_of($min) == 'number' and type_of($max) == 'number' and $max >
     $min;
 
   @if $valid {
-    $min: unitlessToPx($min);
-    $max: unitlessToPx($max);
+    $min: fix-unitless($min);
+    $max: fix-unitless($max);
 
-    @include qPlus($min, $max) {
+    @include media($min, $max) {
       @content;
     }
   }
 }
 
 @mixin width($value) {
-  $valid: type_of($value) == "number";
+  $valid: type_of($value) == 'number';
 
   @if $valid {
-    $value: unitlessToPx($value);
+    $value: fix-unitless($value);
 
-    @include qPlus((width: $value)) {
+    @include media(
+      (
+        width: $value
+      )
+    ) {
       @content;
     }
   }
 }
 
 @mixin height($value) {
-  $valid: type_of($value) == "number";
+  $valid: type_of($value) == 'number';
 
   @if $valid {
-    $value: unitlessToPx($value);
+    $value: fix-unitless($value);
 
-    @include qPlus((height: $value)) {
+    @include media(
+      (
+        height: $value
+      )
+    ) {
       @content;
     }
   }
@@ -200,7 +213,11 @@
   $valid: validate(orientation, $value);
 
   @if $valid {
-    @include qPlus((orientation: $value)) {
+    @include media(
+      (
+        orientation: $value
+      )
+    ) {
       @content;
     }
   }
@@ -221,7 +238,7 @@
 // Retina
 // **************************************
 @mixin retina() {
-  @include qPlus(retina) {
+  @include media(retina) {
     @content;
   }
 }

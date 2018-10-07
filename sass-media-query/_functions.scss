@@ -1,7 +1,7 @@
 //  Unitless Value To Pixel
 // **************************************
-@function unitlessToPx($value) {
-  @if type_of($value) == "number" and unitless($value) {
+@function fix-unitless($value) {
+  @if type_of($value) == 'number' and unitless($value) {
     $value: $value * 1px;
   }
   @return $value;
