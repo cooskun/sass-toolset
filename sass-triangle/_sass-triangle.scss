@@ -8,7 +8,7 @@
   $length: length($size);
 
   //  Default unit for unitless values
-  $default-unit: "px";
+  $default-unit: 'px';
 
   //  All size values will be here with default unit
   $sizes-unit: ();
@@ -59,14 +59,14 @@
   //  There is three values for the size
   @if $length == 3 {
     //  Triangle direction is vertical
-    @if $dir == "custom up" or $dir == "custom down" {
+    @if $dir == 'custom up' or $dir == 'custom down' {
       $height: nth($sizes-unit, 1) !global;
       $left: nth($sizes-unit, 2) !global;
       $right: nth($sizes-unit, 3) !global;
     }
 
     //  Triangle direction is horizontal
-    @else if $dir == "custom left" or $dir == "custom right" {
+    @else if $dir == 'custom left' or $dir == 'custom right' {
       $width: nth($sizes-unit, 1) !global;
       $up: nth($sizes-unit, 2) !global;
       $down: nth($sizes-unit, 3) !global;
@@ -76,7 +76,7 @@
   //  Create triangle
 
   //  Triangle is looking up
-  @if $dir == "up" {
+  @if $dir == 'up' {
     border-width: 0 $half-width $height $half-width;
     border-color: transparent transparent $color transparent;
 
@@ -86,7 +86,7 @@
   }
 
   //  Triangle is looking down
-  @else if $dir == "down" {
+  @else if $dir == 'down' {
     border-width: $height $half-width 0 $half-width;
     border-color: $color transparent transparent transparent;
 
@@ -96,7 +96,7 @@
   }
 
   //  Triangle is looking left
-  @else if $dir == "left" {
+  @else if $dir == 'left' {
     border-width: $half-height $half-width $half-height 0;
     border-color: transparent $color transparent transparent;
 
@@ -106,7 +106,7 @@
   }
 
   //  Triangle is looking right
-  @else if $dir == "right" {
+  @else if $dir == 'right' {
     border-width: $half-height 0 $half-height $width;
     border-color: transparent transparent transparent $color;
 
@@ -116,7 +116,7 @@
   }
 
   //  Triangle is looking up-left
-  @else if $dir == "up left" or $dir == "left up" {
+  @else if $dir == 'up left' or $dir == 'left up' {
     border-width: $height $width 0 0;
     border-color: $color transparent transparent transparent;
 
@@ -126,7 +126,7 @@
   }
 
   //  Triangle is looking up-right
-  @else if $dir == "up right" or $dir == "right up" {
+  @else if $dir == 'up right' or $dir == 'right up' {
     border-width: 0 $width $height 0;
     border-color: transparent $color transparent transparent;
 
@@ -136,7 +136,7 @@
   }
 
   //  Triangle is looking down-left
-  @else if $dir == "down left" or $dir == "left down" {
+  @else if $dir == 'down left' or $dir == 'left down' {
     border-width: $height 0 0 $width;
     border-color: transparent transparent transparent $color;
 
@@ -146,7 +146,7 @@
   }
 
   //  Triangle is looking down-right
-  @else if $dir == "down right" or $dir == "right down" {
+  @else if $dir == 'down right' or $dir == 'right down' {
     border-width: 0 0 $height $width;
     border-color: transparent transparent $color transparent;
 
@@ -156,7 +156,7 @@
   }
 
   //  Custom triangle. Direction is up
-  @else if $dir == "custom up" {
+  @else if $dir == 'custom up' {
     border-width: 0 $right $height $left;
     border-color: transparent transparent $color transparent;
 
@@ -166,7 +166,7 @@
   }
 
   //  Custom triangle. Direction is down
-  @else if $dir == "custom down" {
+  @else if $dir == 'custom down' {
     border-width: $height $right 0 $left;
     border-color: $color transparent transparent transparent;
 
@@ -176,7 +176,7 @@
   }
 
   //  Custom triangle. Direction is left
-  @else if $dir == "custom left" {
+  @else if $dir == 'custom left' {
     border-width: $up $width $down 0;
     border-color: transparent $color transparent transparent;
 
@@ -186,7 +186,7 @@
   }
 
   //  Custom triangle. Direction is right
-  @else if $dir == "custom right" {
+  @else if $dir == 'custom right' {
     border-width: $up 0 $down $width;
     border-color: transparent transparent transparent $color;
 
