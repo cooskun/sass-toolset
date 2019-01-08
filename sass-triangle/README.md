@@ -1,6 +1,6 @@
 # SASS Triangle Maker
 
-Triangles are so pain. At least before it was. Sass Triangle makes it so easy.
+Triangles are really annoying in CSS. But it doesn't have to be. Sass Triangle changes it.
 
 ## Usage
 
