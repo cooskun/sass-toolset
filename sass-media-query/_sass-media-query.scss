@@ -242,3 +242,17 @@
     @content;
   }
 }
+
+// Dark and Light Mode
+// **************************************
+@mixin dark-mode() {
+  @include media(dark-mode) {
+    @content;
+  }
+}
+
+@mixin light-mode() {
+  @include media(light-mode) {
+    @content;
+  }
+}
