@@ -8,38 +8,30 @@
 @mixin media($args...) {
   $query: $default-device;
 
-  @each $i in $args {
-    $type: type_of($i);
-
-    @if $type == 'string' {
-      $valid: map_has_key($Queries, $i);
-
-      @if $valid {
-        $query: $query + ' and ' + map_get($Queries, $i);
+  @each $item in $args {
+    @if type_of($item) == 'string' {
+      @if map_has_key($Queries, $item) {
+        $query: $query + ' and ' + map_get($Queries, $item);
       }
     }
 
-    @if $type == 'map' {
-      $feature: map_keys($i);
-      $value: map_values($i);
+    @if type_of($item) == 'map' {
+      $feature: map_keys($item);
+      $value: map_values($item);
 
-      $validFeature: validate(feature, #{$feature});
-
-      @if $validFeature {
-        $query: $query + ' and ' + '(#{$feature} : #{$value})';
-      }
+      $query: $query + ' and ' + '(#{$feature} : #{$value})';
     }
 
-    @if $type == 'number' {
-      $i: fix-unitless($i);
+    @if type-of($item) == 'number' {
+      $item: fix-unitless($item);
 
       @if str_index($query, min-width) and str_index($query, max-width) {
         @warn "You can add maximum two number value";
       } @else {
         @if str_index($query, min-width) {
-          $query: $query + ' and ' + '(max-width : #{$i})';
+          $query: $query + ' and ' + '(max-width : #{$item})';
         } @else {
-          $query: $query + ' and ' + '(min-width : #{$i})';
+          $query: $query + ' and ' + '(min-width : #{$item})';
         }
       }
     }

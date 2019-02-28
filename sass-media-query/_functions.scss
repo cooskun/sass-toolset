@@ -9,18 +9,6 @@
 
 //  Validate something from $Validations object
 // **************************************
-@function validate($target, $value) {
-  $isTrue: null;
-
-  @if map_has_key($Validations, $target) {
-    $target: map_get($Validations, #{$target});
-  }
-
-  @each $i in $target {
-    @if ($i == $value) {
-      $isTrue: true;
-    }
-  }
-
-  @return $isTrue;
+@function isExists($list, $value) {
+  @return (index($list, $value) != null)
 }
