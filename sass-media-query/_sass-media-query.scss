@@ -45,9 +45,7 @@
 // Size Queries
 // **************************************
 @mixin min($value) {
-  $valid: type_of($value) == 'number';
-
-  @if $valid {
+  @if type_of($value) == 'number' {
     @include media($value) {
       @content;
     }
@@ -55,10 +53,9 @@
 }
 
 @mixin max($value) {
-  $valid: type_of($value) == 'number';
-  $value: fix-unitless($value);
+  @if type_of($value) == 'number' {
+    $value: fix-unitless($value);
 
-  @if $valid {
     @include media(
       (
         max-width: $value
@@ -70,10 +67,7 @@
 }
 
 @mixin minMax($min, $max) {
-  $valid: type_of($min) == 'number' and type_of($max) == 'number' and $max >
-    $min;
-
-  @if $valid {
+  @if type_of($min) == 'number' and type_of($max) == 'number' and $max > $min {
     $min: fix-unitless($min);
     $max: fix-unitless($max);
 
@@ -84,9 +78,7 @@
 }
 
 @mixin width($value) {
-  $valid: type_of($value) == 'number';
-
-  @if $valid {
+  @if type_of($value) == 'number' {
     $value: fix-unitless($value);
 
     @include media(
@@ -100,9 +92,7 @@
 }
 
 @mixin height($value) {
-  $valid: type_of($value) == 'number';
-
-  @if $valid {
+  @if type_of($value) == 'number' {
     $value: fix-unitless($value);
 
     @include media(
@@ -202,14 +192,8 @@
 // Orientations
 // **************************************
 @mixin orientation($value) {
-  $valid: validate(orientation, $value);
-
-  @if $valid {
-    @include media(
-      (
-        orientation: $value
-      )
-    ) {
+  @if isExists($orientations, $value) {
+    @include media((orientation: $value)) {
       @content;
     }
   }
