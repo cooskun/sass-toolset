@@ -2,6 +2,16 @@
 
 An useful toolset for Sass
 
+## Install
+
+```bash
+npm install --save sass-toolset
+
+// or
+
+yarn add sass-toolset
+```
+
 ## Tool List
 
 * [Sass Modernizr](https://github.com/coskunbaris/sass-toolset/tree/master/sass-modernizr)
