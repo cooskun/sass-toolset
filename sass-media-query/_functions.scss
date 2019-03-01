@@ -2,7 +2,7 @@
 // **************************************
 @function fix-unitless($value) {
   @if type_of($value) == 'number' and unitless($value) {
-    $value: $value * 1px;
+    $value: $value * 1#{$default-unit-for-unitless};
   }
   @return $value;
 }
