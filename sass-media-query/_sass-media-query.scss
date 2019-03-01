@@ -245,6 +245,18 @@
 
 // Dark and Light Mode
 // **************************************
+@mixin color-scheme($value) {
+  @if isExist($color-schemes, $value) {
+    @include media(
+      (
+        prefers-color-scheme: $value
+      )
+    ) {
+      @content;
+    }
+  }
+}
+
 @mixin dark-mode() {
   @include media(dark-mode) {
     @content;
