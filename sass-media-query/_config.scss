@@ -1,54 +1,55 @@
 // Set default device type
-$default-device: 'all' !default;
+$default-device: 'only screen' !default;
 
 // Set default unit
-$default-unit-for-unitless: 'px';
+$default-unit-for-unitless: 'px' !default;
 
-// **************************************
+// Certain values for some media queries
+$device-types: all, print, screen, speech;
+$orientations: portrait, landscape;
+$color-modes: dark, light;
+
 // Breakpoints
-// **************************************
-$Breakpoints: (
+$breakpoints: (
   xs: 320px,
   sm: 576px,
   md: 768px,
   lg: 992px,
   xl: 1200px
-);
+) !default;
 
-$xs-min: map_get($Breakpoints, xs);
-$sm-min: map_get($Breakpoints, sm);
-$md-min: map_get($Breakpoints, md);
-$lg-min: map_get($Breakpoints, lg);
-$xl-min: map_get($Breakpoints, xl);
+// Min and Max breakpoints
+$xs-min: map_get($breakpoints, xs);
+$sm-min: map_get($breakpoints, sm);
+$md-min: map_get($breakpoints, md);
+$lg-min: map_get($breakpoints, lg);
+$xl-min: map_get($breakpoints, xl);
 $xs-max: $sm-min - 1;
 $sm-max: $md-min - 1;
 $md-max: $lg-min - 1;
 $lg-max: $xl-min - 1;
 
-// **************************************
-// Queries
-// **************************************
-$Queries: (
-  xs: '(min-width: #{$xs-min})',
-  sm: '(min-width: #{$sm-min})',
-  md: '(min-width: #{$md-min})',
-  lg: '(min-width: #{$lg-min})',
-  xl: '(min-width: #{$xl-min})',
-  xs-max: '(max-width: #{$xs-max})',
-  sm-max: '(max-width: #{$sm-max})',
-  md-max: '(max-width: #{$md-max})',
-  lg-max: '(max-width: #{$lg-max})',
-  xs-only: '(min-width: #{$xs-min}) and (max-width: #{$xs-max})',
-  sm-only: '(min-width: #{$sm-min}) and (max-width: #{$sm-max})',
-  md-only: '(min-width: #{$md-min}) and (max-width: #{$md-max})',
-  lg-only: '(min-width: #{$lg-min}) and (max-width: #{$lg-max})',
-  portrait: '(orientation: portrait)',
-  landscape: '(orientation: landscape)',
-  retina:
-    '(min--moz-device-pixel-ratio : 1.3), (-o-min-device-pixel-ratio: 2.6/2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx)',
-  dark-mode: '(prefers-color-scheme: dark)',
-  light-mode: '(prefers-color-scheme: light)'
+// Short Queries
+$keywords: (
+    all:        all,
+    print:      print,
+    screen:     screen,
+    speech:     speech,
+    xs:         ( min-width: $xs-min, max-width: $xs-max ),
+    sm:         ( min-width: $sm-min, max-width: $sm-max ),
+    md:         ( min-width: $md-min, max-width: $md-max ),
+    lg:         ( min-width: $lg-min, max-width: $lg-max ),
+    min-xs:     ( min-width: $xs-min ),
+    min-sm:     ( min-width: $sm-min ),
+    min-md:     ( min-width: $md-min ),
+    min-lg:     ( min-width: $lg-min ),
+    min-xl:     ( min-width: $xl-min ),
+    max-xs:     ( max-width: $xs-max ),
+    max-sm:     ( max-width: $sm-max ),
+    max-md:     ( max-width: $md-max ),
+    max-lg:     ( max-width: $lg-max ),
+    portrait:   ( orientation: portrait ),
+    landscape:  ( orientation: landscape ),
+    dark-mode:  ( prefers-color-scheme: dark ),
+    light-mode: ( prefers-color-scheme: light )
 );
-
-$orientations: portrait, landscape;
-$color-schemes: dark, light;
