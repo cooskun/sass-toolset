@@ -1,0 +1,49 @@
+.test {
+  /* Media : Keywords : Device */
+  content: "@media(print) should be @media only print";
+  content: true;
+  /* Media : Keywords : Orientation */
+  content: "@media(portrait) should be @media only screen and (orientation:portrait)";
+  content: true;
+  /* Media : Keywords : Prefered color scheme */
+  content: "@media(dark-mode) should be @media only screen and (prefers-color-scheme:dark)";
+  content: true;
+  /* Media : Keywords : Min Device Size */
+  content: "@media(min-md) should be @media only screen and (min-width:768px)";
+  content: true;
+  /* Media : Keywords : Max Device Sizes */
+  content: "@media(max-sm) should be @media only screen and (max-width:767px)";
+  content: true;
+  /* Media : Keywords : Absolute Device Size */
+  content: "@media(md) should be @media only screen and (min-width:768px) and (max-width:991px)";
+  content: true;
+  /* Media : Keywords : Multi Usage */
+  content: "@media(xs, portrait) should be @media only screen and (min-width:320px) and (max-width:575px) and (orientation:portrait)";
+  content: true;
+  /* Media : Retina */
+  content: "@media(retina) should be @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi)";
+  content: true;
+  /* Media : Retina : Multi Usage */
+  content: "@media(retina, md) should be @media only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width:768px) and (max-width:991px), only screen and (min-device-pixel-ratio: 2) and (min-width:768px) and (max-width:991px), only screen and (min-resolution: 192dpi) and (min-width:768px) and (max-width:991px)";
+  content: true;
+  /* Media : Number */
+  content: "@media(400px) should be @media only screen and (min-width:400px)";
+  content: true;
+  content: "@media(400px, 50rem) should be @media only screen and (min-width:400px) and (max-width:50rem)";
+  content: true;
+  content: "@media(400, 600) should be @media only screen and (min-width:400px) and (max-width:600px)";
+  content: true;
+  /* Media : Short CSS query */
+  content: "@media(min width 320px orientation portrait) should be @media only screen and (min-width:320px) and (orientation:portrait)";
+  content: true;
+  /* Media : Pure CSS */
+  content: "@media((min-width: 320px, orientation: portrait)) should be @media only screen and (min-width:320px) and (orientation:portrait)";
+  content: true;
+  /* Specific Test : retina should force other device types */
+  content: "@media(all, retina, print) should be @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi)";
+  content: true;
+  /* Specific Test : media should accept max three numeric value */
+  content: "@media(300, 400, 500) should be @media only screen and (min-width:300px) and (max-width:400px)";
+  content: true;
+}
+/*# sourceMappingURL=test.css.map */

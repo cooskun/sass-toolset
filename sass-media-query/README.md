@@ -1,24 +1,32 @@
-# Sass Media Query
+# Mediatic
 
 ## Very Simple and Advanced Media Queries for Sass
 
-### media
+### Install
 
-**media** is a mixin which is very smart and simple. Accepts various parameters. And, gives meaning all of them. Keywords, numbers, even native CSS media queries. This combination make impossible to missing any query type of CSS.
+```bash
+npm install --save mediatic
 
-The plugin has many reserved keyword to use shortly. Just put one of them into **media** mixin and start. By the way, this keywords is extendable by you. I will tell how, later.
+// or
 
-For now, let's see what can **media mixin** do.
+yarn add mediatic
+```
+
+### Summary
+
+**Mediatic** is a mixin which is very smart and simple. Just put something and sit back. Specific keywords, numbers, even pure css queries is valid values. **Mediatic** supports many type of values as much as possible. By the way, keywords are extendable by you. I will tell how, later.
+
+For now, look at the next example and see how **Mediatic** survives against complex queries.
 
 ```scss
 // Input
-@include media(xs, 767, portrait, (prefers-color-scheme: dark), retina) {
-    // styles
+@include mediatic(min-xs, 767, orientation portrait, prefers-color-scheme: dark) {
+    /* styles */
 }
 
 // Output
-@media all and (min-width: 320px) and (max-width : 767px) and (orientation : portrait) and (prefers-color-scheme: dark) and (min--moz-device-pixel-ratio : 1.3), (-o-min-device-pixel-ratio: 2.6/2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx)) {
-    // styles
+@media only screen and (min-width: 320px) and (max-width : 767px) and (orientation : portrait) and (prefers-color-scheme: dark) {
+    /* styles */
 }
 ```
 
@@ -26,284 +34,222 @@ For now, let's see what can **media mixin** do.
 
 ```scss
 // Input
-@include media(xs) {
-    // styles
+@include mediatic(/* values goes here */) {
+    /* styles */
 }
 
-// Output
-@media all and (min-width : 320px) {
-    // styles
-}
-
-// All opinions
-// xs, sm, md, lg, xl
-// xs-max, sm-max, md-max, lg-max
-// xs-only, sm-only, md-only, lg-only
-// portrait, landscape
-// retina
-// dark-mode, light-mode
+// ALL OPINIONS
+// Keywords :   xs, sm, md, lg, xl
+//              min-xs, min-sm, min-md, min-lg, min-xl
+//              max-xs, max-sm, max-md, max-lg
+//              portrait, landscape
+//              dark, light
+//              retina
+// Numbers :    Any positive number with/without any unit
+//              400 or 400px, 30rem
+// Pure CSS :   Any valid pure CSS query with/without parantesis
+//              min-width : 768px, orientation : portrait
+// Short CSS :  Any valid css query only with their properties and values
+//              min-width 768px, orientation portrait
+//              or all together => min-width 768px orientation portrait
 ```
 
-#### Examples
+### Examples
 
-#### min-width
+#### Min Device Size
 
 ```scss
 // Input
-@include media(xs) {
-    // styles
-}
+@include mediatic(min-xs) { /* styles */ }
 // or
-@include min(320px) {
-    // styles
-}
+@include mediatic(320px) { /* styles */ }
 // or
-@include xs() {
-    // styles
-}
+@include mediatic(320) { /* styles */ }
+// or
+@include min(320) { /* styles */ }
+// or with shortand
+@include min-xs() { /* styles */ }
 
 // Output
-@media all and (min-width: 320px) {
-    // styles
-}
+@media only screen and (min-width: 320px) { /* styles */ }
 
-// All opinions
-// xs, xs(): 320px
-// sm, sm(): 576px
-// md, md(): 768px
-// lg, lg(): 992px
-// xl, xl(): 1200px
+// ALL OPINIONS
+// min-xs, min-xs(): 320px
+// min-sm, min-sm(): 576px
+// min-md, min-md(): 768px
+// min-lg, min-lg(): 992px
+// min-xl, min-xl(): 1200px
 // min( $value )
 ```
 
-#### max-width
+#### Max Device Sizes
 
 ```scss
 // Input
-@include media(xs-max) {
-    // styles
-}
+@include mediatic(max-xs) { /* styles */ }
 // or
-@include max(575px) {
-    // styles
-}
+@include mediatic(575px) { /* styles */ }
 // or
-@include xs-max() {
-    // styles
-}
+@include mediatic(575) { /* styles */ }
+// or
+@include max(575) { /* styles */ }
+// or with shortand
+@include max-xs() { /* styles */ }
 
 // Output
-@media all and (max-width: 575px) {
-    // styles
-}
+@media only screen and (max-width: 575px) { /* styles */ }
 
-// All opinions
-// xs-max, xs-max(): 575px
-// sm-max, sm-max(): 767px
-// md-max, md-max(): 991px
-// lg-max, lg-max(): 1199px
+// ALL OPINIONS
+// max-xs, max-xs(): 575px
+// max-sm, max-sm(): 767px
+// max-md, max-md(): 991px
+// max-lg, max-lg(): 1199px
 // max( $value )
 ```
 
-#### Certain Device
+#### Between Device Sizes
 
 ```scss
 // Input
-@include media(md-only) {
-    // styles
-}
+@include mediatic(min-sm, max-md) { /* styles */ }
 // or
-@media md-only() {
-    // styles
-}
+@include mediatic(576px, 991px ) { /* styles */ }
+// or
+@include mediatic(576, 991) { /* styles */ }
+// or
+@include between(576, 991) { /* styles */ }
 
 // Output
-@media all and (min-width: 768px) and (max-width: 991px) {
-    // styles
-}
-
-// All opinions
-// xs-only, xs-only(): 320px-575px
-// sm-only, sm-only(): 576px-767px
-// md-only, md-only(): 768px-991px
-// lg-only, lg-only(): 992px-1199px
+@media only screen and (min-width: 576px) and (max-width: 991px) { /* styles */ }
 ```
 
-#### Between
+#### Certain Device Sizes
 
 ```scss
 // Input
-@include media(sm, md-max) {
-    // styles
-}
-// or
-@include between(576px, 991px) {
-    // styles
-}
+@include mediatic(md) { /* styles */ }
+// or with shortand
+@media md() { /* styles */ }
 
 // Output
-@media all and (min-width: 576px) and (max-width: 991px) {
-    // styles
-}
+@media only screen and (min-width: 768px) and (max-width: 991px) { /* styles */ }
+
+// ALL OPINIONS
+// xs, xs(): 320px-575px
+// sm, sm(): 576px-767px
+// md, md(): 768px-991px
+// lg, lg(): 992px-1199px
 ```
 
-#### Absolute Size (width and height)
+#### Vertically/Horizontaly Absolute Device Sizes
 
 ```scss
 // Input
-@include width(1024px) {
-    // styles
-}
+@include width(1024px) { /* styles */ }
+@include height(768px) { /* styles */ }
+// or
+@include width(1024) { /* styles */ }
+@include height(768) { /* styles */ }
 
 // Output
-@media all and (width: 1024px) {
-    // styles
-}
-
-// Input
-@include height(768px) {
-    // styles
-}
-
-// Output
-@media all and (height: 768px) {
-    // styles
-}
+@media only screen and (width: 1024px) { /* styles */ }
+@media only screen and (height: 768px) { /* styles */ }
 ```
 
 #### Orientation
 
 ```scss
 // Input
-@include media(portrait) {
-    // styles
-}
+@include mediatic(portrait) { /* styles */ }
 // or
-@include orientation(portrait) {
-    // styles
-}
-// or
-@include portrait() {
-    // styles
-}
+@include orientation(portrait) { /* styles */ }
+// or with shortand
+@include portrait() { /* styles */ }
 
 // Output
-@media all and (orientation: portrait) {
-    // styles
-}
+@media only screen and (orientation: portrait) { /* styles */ }
 
-// All opinions
-// media(portrait), media(landscape)
-// orientation(portrait), orientation(landscape)
+// ALL OPINIONS
+// mediatic(portrait / landscape)
+// orientation(portrait / landscape)
 // portrait(), landscape()
 ```
 
-##### Retina Screen
+#### Retina
 
 ```scss
 // Input
-@include media(retina) {
-    // styles
-}
+@include mediatic(retina) { /* styles */ }
 // or
-@include retina() {
-    // styles
-}
+@include retina() { /* styles */ }
 
 // Output
-@media all and (min--moz-device-pixel-ratio: 1.3), (-o-min-device-pixel-ratio: 2.6 / 2), (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
-    // styles
+@media only screen and (-webkit-min-device-pixel-ratio: 1.3), (min-device-pixel-ratio: 1.3), (min-resolution: 1.3dppx) {
+    /* styles */
 }
 ```
 
-#### Dark/Light Mode (Mojave)
+#### Dark/Light Mode (MacOS Mojave)
 
 ```scss
 // Input
-@include media(dark-mode) {
-    //  your codes
-}
+@include mediatic(dark) { /* styles */ }
 // or
-@include dark-mode() {
-    //  your codes
-}
+@include dark() { /* styles */ }
 
 // Output
-@media all and (prefers-color-scheme: dark) {
-    // styles
-}
+@media only screen and (prefers-color-scheme: dark) { /* styles */ }
 
 // All opinions
-// media(dark-mode), media(light-mode)
-// color-scheme(dark), color-scheme(light)
-// dark-mode(), light-mode()
+// mediatic(dark / light)
+// color-scheme(dark / light )
+// dark(), light()
 ```
 
 #### Pure CSS Query
 
 ```scss
 // Input
-@include media((min-width : 320px), (max-width: 768px), (orientation: portrait)) {
-    // styles
-}
+@include mediatic(min-width:320px, max-width:768px, orientation:portrait) { /* styles */ }
 
 // Output
-@media all and (min-width: 320px) and (max-width: 768px) {
-    // styles
-}
+@media all and (min-width: 320px) and (max-width: 768px) { /* styles */ }
+```
+
+#### Short CSS Queries
+
+```scss
+// Input
+@include mediatic(min-width 320px max-width 768px orientation portrait) { /* styles */ }
+
+// Output
+@media only screen and (min-width: 320px) and (max-width: 768px) and (orientation: portrait) { /* styles */ }
 ```
 
 #### Numeric Values
 
 ```scss
 // Input
-@include media(320px) {
-    //  your codes
-}
+@include mediatic(320px) { /* styles */ }
+@include mediatic(320px, 768px) {}
+// or
+@include mediatic(320) { /* styles */ }
+@include mediatic(320, 768) { /* styles */ }
 
 // Output
-@media all and (min-width : 320px) {
-    // styles
-}
-
-// Input
-@include media(320px, 480px) {
-    // styles
-}
-
-// Output
-@media all and (min-width : 320px) and (max-width : 480px) {
-    // styles
-}
+@media only screen and (min-width : 320px) { /* styles */ }
+@media only screen and (min-width : 320px) and (max-width: 768px) { /* styles */ }
 ```
 
-**Note :** Numeric values doesn't have to have unit. You can skip it.
-
-#### Numeric Values without Unit
+**Note :** You can use any CSS unit instead of px. Even you can set it defaultly. To learn how to do it, follow the [configuration](####Configuration) section.
 
 ```scss
 // Input
-@include media(320) {
-    //  your codes
-}
+@include mediatic(20rem, 40rem) { /* styles */ }
 
 // Output
-@media all and (min-width : 320px) {
-    // styles
-}
-
-// Input
-@include media(320, 480) {
-    // styles
-}
-
-// Output
-@media all and (min-width : 320px) and (max-width : 480px) {
-    // styles
-}
+@media only screen and (min-width: 20rem) and (max-width: 40rem) { /* styles */ }
 ```
-
-If you prefer to working with any other unit instead of px, you can customize it. Follow the [link](#to-cahnge-unitless-number)
 
 #### Configuration
 
@@ -314,60 +260,65 @@ For any configuration go into _config.scss
 ```scss
 $Breakpoints : (
     xs : 320px,
-    sm : 480px,
+    sm : 576px,
     md : 768px,
     lg : 992px,
     xl : 1200px
-);
+) !default;
 ```
 
 ##### To Change Default Device
 
 ```scss
-$default-device : 'all' !default;
+$default-device : 'only screen' !default;
 ```
 
-<h4 id="to-cahnge-unitless-number">To change default unit for unitless numbers</h4>
+#### To change default unit for unitless numbers
 
 ```scss
-$default-unit-for-unitless: 'px';
+$default-unit-for-unitless: 'px' !default;
 ```
 
 ##### To Add New Keywords
 
 ```scss
 $Queries : (
-    default queries,
     ..............,
     ..............,
     ..............,
-    my-custom-query : '(min-width : 1280px) and (max-width : 1920px)'
+    my-custom-query : (
+        min-width: 768px,
+        max-width: 1024px,
+        orientation: portrait,
+        prefers-color-scheme: dark
+    )
 );
 
 // Now use it
-@include media( my-custom-query ) {
-    // styles
-}
-```
+@include mediatic( my-custom-query ) { /* styles */ }
 
-**Note :** Write your query between quotes. It should be string.
+// Output
+@media only screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) and (prefers-color-scheme: dark) { /* styles */ }
+```
 
 ### Short Mixins
 
 ```scss
-@include xs() {}                                            // Device is minimum x-small
-@include sm() {}                                            // Device is minimum small
-@include md() {}                                            // Device is minimum medium
-@include lg() {}                                            // Device is minimum large
-@include xl() {}                                            // Device is minimum x-large
-@include xs-max() {}                                        // Device is maxumum x-small
-@include sm-max() {}                                        // Device is maximum small
-@include md-max() {}                                        // Device is maximum medium
-@include lg-max() {}                                        // Device is maximum large
-@include xs-only() {}                                       // Device is x-small
-@include sm-only() {}                                       // Device is small
-@include md-only() {}                                       // Device is medium
-@include lg-only() {}                                       // Device is large
+@include xs() {}                                            // Device is x-small
+@include sm() {}                                            // Device is small
+@include md() {}                                            // Device is medium
+@include lg() {}                                            // Device is large
+@include min-xs() {}                                        // Device is minimum x-small
+@include min-sm() {}                                        // Device is minimum small
+@include min-md() {}                                        // Device is minimum medium
+@include min-lg() {}                                        // Device is minimum large
+@include min-xl() {}                                        // Device is minimum x-large
+@include max-xs() {}                                        // Device is maxumum x-small
+@include max-sm() {}                                        // Device is maximum small
+@include max-md() {}                                        // Device is maximum medium
+@include max-lg() {}                                        // Device is maximum large
+@include width( $value ) {}                                 // Device width is equal to value
+@include height( $value ) {}                                // Device height is equal to value
 @include min( $value ) {}                                   // Device is equal or bigger than $value
 @include max( $value ) {}                                   // Device is equal or smaller than $value
 @include between( $min, $max ) {}                           // Device is between $min and $max
@@ -375,7 +326,8 @@ $Queries : (
 @include portrait() {}                                      // Device orientation is portrait
 @include landscape() {}                                     // Device orientation is landscape
 @include retina() {}                                        // Device has retina screen
-@include color-schema( $value: dark/light ) {}              // Device preferred color is $value (For Mojave color mode)
+@include color-scheme( $value: dark/light ) {}              // Device preferred color is $value (For Mojave color mode)
 @include dark-mode() {}                                     // Device preffered color is dark
 @include light-mode() {}                                    // Device preffered color is light
+@include ratio ( $value ) {}                                // Device ratio is equal value
 ```

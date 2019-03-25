@@ -59,23 +59,10 @@
   @return false;
 }
 
-// Check if value is a device
-@function is_device($value) {
-  $devices: $device-types;
-
-  @if is_exist($devices, $value) {
-    @return true;
-  }
-
-  @return false;
-}
-
-// Extend
+// Extend tail into retina expression
 @function retina_extend($value) {
   @return 
-  'only screen and (-webkit-min-device-pixel-ratio: 2) #{$value}, 
-  only screen and (min-device-pixel-ratio: 2) #{$value}, 
-  only screen and (min-resolution: 192dpi) #{$value}';
+  'only screen and (-webkit-min-device-pixel-ratio: 2)#{$value}, only screen and (min-device-pixel-ratio: 2)#{$value}, only screen and (min-resolution: 192dpi)#{$value}';
 }
 
 // check if value type is string
@@ -101,4 +88,15 @@
 // check if value is valid keyword
 @function is_keyword($value) {
   @return map-has-key($keywords, $value);
+}
+
+// Check if value is a device
+@function is_device($value) {
+  $devices: $device-types;
+
+  @if is_exist($devices, $value) {
+    @return true;
+  }
+
+  @return false;
 }

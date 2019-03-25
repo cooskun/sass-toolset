@@ -5,7 +5,7 @@ $default-device: 'only screen' !default;
 $default-unit-for-unitless: 'px' !default;
 
 // Certain values for some media queries
-$device-types: all, print, screen, speech;
+$device-types: all, print, 'only print', screen, 'only screen', speech, 'only speech';
 $orientations: portrait, landscape;
 $color-modes: dark, light;
 
@@ -32,13 +32,14 @@ $lg-max: $xl-min - 1;
 // Short Queries
 $keywords: (
     all:        all,
-    print:      print,
-    screen:     screen,
-    speech:     speech,
+    print:      'only print',
+    screen:     'only screen',
+    speech:     'only speech',
     xs:         ( min-width: $xs-min, max-width: $xs-max ),
     sm:         ( min-width: $sm-min, max-width: $sm-max ),
     md:         ( min-width: $md-min, max-width: $md-max ),
     lg:         ( min-width: $lg-min, max-width: $lg-max ),
+    xl:         ( min-width: $xl-min ),
     min-xs:     ( min-width: $xs-min ),
     min-sm:     ( min-width: $sm-min ),
     min-md:     ( min-width: $md-min ),
@@ -50,6 +51,6 @@ $keywords: (
     max-lg:     ( max-width: $lg-max ),
     portrait:   ( orientation: portrait ),
     landscape:  ( orientation: landscape ),
-    dark-mode:  ( prefers-color-scheme: dark ),
-    light-mode: ( prefers-color-scheme: light )
+    dark:  ( prefers-color-scheme: dark ),
+    light: ( prefers-color-scheme: light )
 );

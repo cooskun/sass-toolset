@@ -1,0 +1,20 @@
+// Should function
+@function should_be($value) {
+  @return '@media(#{$value}) should be @media #{media($value)}';
+}
+// Test function
+@function test($value, $expected) {
+  $result: media($value) == $expected;
+
+  @if $result == false {    
+    @return '#{$result} : expected #{$expected}';
+  }
+
+  @return $result;
+}
+
+// Test mixin
+@mixin test($value, $expected) {
+  content: should_be($value);
+  content: test($value, $expected);
+}

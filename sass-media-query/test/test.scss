@@ -1,0 +1,48 @@
+@import '../index';
+@import 'methods';
+
+.test {
+  /* Media : Keywords : Device */
+  @include test(print, 'only print');
+
+  /* Media : Keywords : Orientation */
+  @include test(portrait,  '#{$default-device} and (orientation:portrait)');
+
+  /* Media : Keywords : Prefered color scheme */
+  @include test(dark-mode,  '#{$default-device} and (prefers-color-scheme:dark)');
+
+  /* Media : Keywords : Min Device Size */
+  @include test(min-md, '#{$default-device} and (min-width:#{$md-min})');
+
+  /* Media : Keywords : Max Device Sizes */
+  @include test(max-sm, '#{$default-device} and (max-width:#{$sm-max})');
+
+  /* Media : Keywords : Absolute Device Size */
+  @include test(md, '#{$default-device} and (min-width:#{$md-min}) and (max-width:#{$md-max})');
+
+  /* Media : Keywords : Multi Usage */
+  @include test((xs, portrait), '#{$default-device} and (min-width:#{$xs-min}) and (max-width:#{$xs-max}) and (orientation:portrait)');
+  
+  /* Media : Retina */
+  @include test(retina, 'only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi)');
+
+  /* Media : Retina : Multi Usage */
+  @include test((retina, md), 'only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width:#{$md-min}) and (max-width:#{$md-max}), only screen and (min-device-pixel-ratio: 2) and (min-width:#{$md-min}) and (max-width:#{$md-max}), only screen and (min-resolution: 192dpi) and (min-width:#{$md-min}) and (max-width:#{$md-max})');
+
+  /* Media : Number */
+  @include test((400px), '#{$default-device} and (min-width:400px)');
+  @include test((400px, 50rem), '#{$default-device} and (min-width:400px) and (max-width:50rem)');
+  @include test((400, 600), '#{$default-device} and (min-width:400#{$default-unit-for-unitless}) and (max-width:600#{$default-unit-for-unitless})');
+
+  /* Media : Short CSS query */
+  @include test((min width 320px orientation portrait), 'only screen and (min-width:320px) and (orientation:portrait)');
+
+  /* Media : Pure CSS */
+  @include test((min-width:320px, orientation:portrait), 'only screen and (min-width:320px) and (orientation:portrait)');
+
+  /* Specific Test : retina should force other device types */
+  @include test((all, retina, print), 'only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi)');
+
+  /* Specific Test : media should accept max three numeric value */
+  @include test((300, 400, 500), '#{$default-device} and (min-width:300#{$default-unit-for-unitless}) and (max-width:400#{$default-unit-for-unitless})');
+}

@@ -1,5 +1,4 @@
-// MEDIA 
-@mixin media($args...) {
+@function media($args) {
   // Tail to keep all media queries together
   $tail: '' !default;
 
@@ -102,13 +101,22 @@
 
   // If retina, extend the tail in retina expression
   @if $is-retina == true {
-    $tail: retina_extend(#{$tail});
+    $tail: retina_extend($tail);
   }
 
   // Set device type to tail if no exist
   @if device_exist($tail) == false {
     $tail: add_query($tail, $device, true);
   }
+
+  // Print out the tail
+  @return #{$tail};
+}
+
+// MEDIA 
+@mixin media($args...) {
+  // Get the query tail
+  $tail: media($args);
 
   // Print out the tail
   @media #{$tail} {
